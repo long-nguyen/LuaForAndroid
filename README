@@ -44,5 +44,13 @@ include $(BUILD_SHARED_LIBRARY)
 
 > Step 4: Use NDK to build .so file
 
+
 >Step 5: How to use Luajava in activity: Simply view FirstLuaJavaAppActivity.java
+
+
+
+
 But simply you can download everything here and modify your java code
+Reference :
+http://my.oschina.net/anwulac/blog/36828
+http://luajit.org/install.html
