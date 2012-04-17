@@ -1,0 +1,48 @@
+This presents how the project was built: 
+Target : LuaJit + Android + Android Lua.
+>Step 1: 
+Load LuaJava library and add to src folder
+https://github.com/mkottman/AndroLua/tree/master/src/org/keplerproject/luajava
+>Step 2: 
+JNI/Android.mk : Build all sub dir files
+JNI/luajava : Containt luajit header which is built by :
+
+_download Luajit http://luajit.org/download.html 
+_using cywin and bash :
+move to <yourdirectory>\LuaJIT-1.1.8
+
+NDK= <your directory>/android-ndk-r7c
+NDKABI=8
+NDKVER=$NDK/toolchains/arm-linux-androideabi-4.4.3
+NDKP=$NDKVER/prebuilt/windows/bin/arm-linux-androideabi-
+NDKF="--sysroot $NDK/platforms/android-$NDKABI/arch-arm"
+make linux HOST_CC="gcc -m32" CROSS=$NDKP TARGET_FLAGS="$NDKF" TARGET=arm
+
+We will get luajit.a file
+>Step 3: 
+Anroid project/ create jni/luajava folder
+Add  luajit.a 
+            lua.h 
+            luajit.h
+            luaconf.h lualib.h
+            lauxlib.h
+add Android.mk : 
+
+LOCAL_PATH := $(call my-dir)
+
+include $(CLEAR_VARS)
+
+LOCAL_LDLIBS := libluajit.a
+LOCAL_ARM_MODE := arm
+TARGET_PLATFORM := armeabi-v7a
+TARGET_ABI := android-8-armeabi
+
+LOCAL_MODULE     := luajava
+LOCAL_SRC_FILES  := luajava.c
+
+include $(BUILD_SHARED_LIBRARY)
+
+> Step 4: Use NDK to build .so file
+
+>Step 5: How to use Luajava in activity: Simply view FirstLuaJavaAppActivity.java
+But simply you can download everything here and modify your java code
